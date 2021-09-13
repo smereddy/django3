@@ -3,25 +3,52 @@
 {% block title %}Clientss{% endblock title %}
 
 {% block content %}
+            <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Client Name</th>
+                                        <th scope="col">Client Account #</th>
+
+                    <th scope="col">Make</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">VIN</th>
+                                        <th scope="col">Purchase Date</th>
+                                                            <th scope="col">Last service Date</th>
+
+
+
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
     {% for vehicle in object_list %}
-        <div class="card">
-            <div class="card-header">
-                <span class="font-weight-bold">Client Name: {{ vehicle.client.name }}</span><br>
-                <span class="font-weight-bold">make: {{ vehicle.make }} | </span><br>
-                <span class="font-weight-bold">model: {{ vehicle.model }} | </span><br>
 
-                <span class="font-muted">VIN: {{ vehicle.VIN }} | </span><br>
-                <span class="font-muted-">Date of Purchase: {{ vehicle.date_of_purchase }} | </span><br>
-                <span class="font-muted">Last Service Date: {{ vehicle.last_service_date }} | </span><br>
+                    <tr>
 
-            </div>
-            <div class="card-body">
-                <p>{{ client.notes }}</p>
-                <a href="{% url 'vehicles_edit' vehicle.pk %}">Edit</a> |
-                <a href="{% url 'vehicles_delete' vehicle.pk %}">Delete</a>
-            </div>
+                        <th scope="row">{{ vehicle.client.name }}</th>
+                        <th scope="row">{{ vehicle.client.acct_number }}</th>
+                        <td>{{ vehicle.make }}</td>
+                        <td>{{ vehicle.model }}</td>
+                        <td>{{ vehicle.VIN }}</td>
+                        <td>{{ vehicle.date_of_purchase }}</td>
+                                                <td>{{ vehicle.last_service_date }}</td>
 
+
+                        <td>
+
+                            <a type="button" class="btn btn-success" href="{% url 'vehicles_edit' vehicle.pk %}">Edit<i
+                                    class="fas fa-pencil" aria-hidden="true"></i></a>
+                            <a type="button" class="btn btn-danger" href="{% url 'vehicles_delete' vehicle.pk %}">Delete<i
+                                    class="far fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
         </div>
-        <br/>
-    {% endfor %}
+    </div>
+
 {% endblock content %}

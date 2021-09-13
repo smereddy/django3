@@ -1,41 +1,45 @@
 {% extends 'base.html' %}
 
-{% block title %}Clientss{% endblock title %}
+{% block title %}Clients{% endblock title %}
 
 {% block content %}
-    {% for client in object_list %}
-        <div class="card">
-            <div class="card-header">
-                <span class="font-weight-bold">{{ client.name }}</span><br>
-                <span class="font-weight-bold">cell: {{ client.cell_phone }} | </span><br>
-                <span class="font-weight-bold">acct: {{ client.acct_number }} | </span><br>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">Account number</th>
+                    <th scope="col">Client Name</th>
+                    <th scope="col">Cell number</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Notes</th>
 
-                <span class="font-muted">addr: {{ client.address }} | </span><br>
-                <span class="font-muted-">city: {{ client.city }} | </span><br>
-                <span class="font-muted">st: {{ client.state }} | </span><br>
-                <span class="font-muted">zip: {{ client.zipcode }} | </span><br>
-                <span class="font-muted">email: {{ client.email }} | </span>
-            </div>
-            <div class="card-body">
-                <p>{{ client.notes }}</p>
-                <a href="{% url 'client_detail' client.pk %}">View</a> |
-                <a href="{% url 'client_edit' client.pk %}">Edit</a> |
-                <a href="{% url 'client_delete' client.pk %}">Delete</a>
-            </div>
-            <div class="card-footer">
-                <a href="{% url 'comment_create' client.pk %}">Add comment</a> |
-                            <a href="{% url 'vehicles_create' client.pk %}">Add vehicles</a>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for client in object_list %}
 
-                {% for comment in client.comments.all %}
-                    <p>
-                        <span class="font-weight-bold">{{ comment.author }} &middot;</span>
-                        {{ comment }}
-                    </p>
-                <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
-                <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+                    <tr>
+                        <th scope="row">{{ client.acct_number }}</th>
+                        <td>{{ client.name }}</td>
+                        <td>{{ client.cell_phone }}</td>
+                        <td>{{ client.email }}</td>
+                        <td>{{ client.notes }}</td>
+
+                        <td>
+                            <a type="button" class="btn btn-primary" href="{% url 'client_detail' client.pk %}">View<i
+                                    class="far fa-eye"></i></a>
+                            <a type="button" class="btn btn-success" href="{% url 'client_edit' client.pk %}">Edit<i
+                                    class="fas fa-edit"></i></a>
+                            <a type="button" class="btn btn-danger" href="{% url 'client_delete' client.pk %}">Delete<i
+                                    class="far fa-trash-o"></i></a>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
+
+                </tbody>
+            </table>
         </div>
-        <br/>
-    {% endfor %}
+    </div>
 {% endblock content %}
