@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="client-entry">
+<h2>{{ object.name }}</h2>
+<p>by {{ object.author }} | {{ object.date }}</p>
+<p>{{ object.note }}</p>
+</div>
+
+<p><a href="{% url 'client_edit' client.pk %}">Edit</a> | <a href="{% url 'client_delete' client.pk %}">Delete</a></p>
+                <a href="{% url 'comment_create' client.pk %}">Add comment</a>
+                {% for comment in client.comments.all %}
+                    <p>
+                        <span class="font-weight-bold">{{ comment.author }} &middot;</span>
+                        {{ comment }}
+                    </p>
+                <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+                <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+                {% endfor %}
+    <br>
+    Vehicles
+    {% for vehicle in client.vehicles.all %}
+                    <div class="card">
+            <div class="card-header">
+                <span class="font-weight-bold">Client Name: {{ vehicle.client.name }}</span><br>
+                <span class="font-weight-bold">make: {{ vehicle.make }} | </span><br>
+                <span class="font-weight-bold">model: {{ vehicle.model }} | </span><br>
+
+                <span class="font-muted">VIN: {{ vehicle.VIN }} | </span><br>
+                <span class="font-muted-">Date of Purchase: {{ vehicle.date_of_purchase }} | </span><br>
+                <span class="font-muted">Last Service Date: {{ vehicle.last_service_date }} | </span><br>
+
+            </div>
+            <div class="card-body">
+                <p>{{ client.notes }}</p>
+                <a href="{% url 'vehicles_edit' vehicle.pk %}">Edit</a> |
+                <a href="{% url 'vehicles_delete' vehicle.pk %}">Delete</a>
+            </div>
+
+        </div>
+                {% endfor %}
+
+<p>Back to <a href="{% url 'client_list' %}">All Clients</a>.</p>
+{% endblock content %}

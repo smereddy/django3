@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientss{% endblock title %}
+
+{% block content %}
+    {% for client in object_list %}
+        <div class="card">
+            <div class="card-header">
+                <span class="font-weight-bold">{{ client.name }}</span><br>
+                <span class="font-weight-bold">cell: {{ client.cell_phone }} | </span><br>
+                <span class="font-weight-bold">acct: {{ client.acct_number }} | </span><br>
+
+                <span class="font-muted">addr: {{ client.address }} | </span><br>
+                <span class="font-muted-">city: {{ client.city }} | </span><br>
+                <span class="font-muted">st: {{ client.state }} | </span><br>
+                <span class="font-muted">zip: {{ client.zipcode }} | </span><br>
+                <span class="font-muted">email: {{ client.email }} | </span>
+            </div>
+            <div class="card-body">
+                <p>{{ client.notes }}</p>
+                <a href="{% url 'client_detail' client.pk %}">View</a> |
+                <a href="{% url 'client_edit' client.pk %}">Edit</a> |
+                <a href="{% url 'client_delete' client.pk %}">Delete</a>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'comment_create' client.pk %}">Add comment</a> |
+                            <a href="{% url 'vehicles_create' client.pk %}">Add vehicles</a>
+
+                {% for comment in client.comments.all %}
+                    <p>
+                        <span class="font-weight-bold">{{ comment.author }} &middot;</span>
+                        {{ comment }}
+                    </p>
+                <a href="{% url 'comment_edit' comment.pk %}">Edit</a> |
+                <a href="{% url 'comment_delete' comment.pk %}">Delete</a>
+                {% endfor %}
+            </div>
+        </div>
+        <br/>
+    {% endfor %}
+{% endblock content %}
